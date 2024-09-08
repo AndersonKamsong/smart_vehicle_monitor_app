@@ -1,11 +1,4 @@
 @charset "UTF-8";
-/*! -----------------------------------------------------------------------------------
-    Template Name: Edmin Admin
-    Template URI: http://admin.pixelstrap.com/Edmin/theme
-    Description: This is Admin Template
-    Author: Pixelstrap
-    Author URI: https://themeforest.net/user/pixelstrap
------------------------------------------------------------------------------------*/
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -11866,8 +11859,8 @@ textarea.form-control-lg {
   --footer-icon: #FF3636;
   --light-semi-gray:#efefef;
   --photoswipe-border: #ddd;
-  --theme-default: #ffd700;
-  --theme-secondary: #C280D2;
+  --theme-default: #25ABBE;
+  --theme-secondary: #F45EAC;
   --light2: #F5F6F9;
   --star-color: #ffa800;
   --chart-dashed-border: rgba(82, 82, 108, 0.2);
@@ -14918,19 +14911,19 @@ ul li {
 }
 
 .btn-primary {
-  background-color: #ffd700;
-  border: 1px solid #ffd700;
+  background-color: #25ABBE;
+  border: 1px solid #25ABBE;
   border-radius: 5px;
   color: #ffffff;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active:focus, .btn-primary.show {
-  background-color: #ffd700;
-  border-color: #ffd700;
+  background-color: #25ABBE;
+  border-color: #25ABBE;
   color: #ffffff;
 }
 .btn-primary:first-child:active {
-  background-color: #43B9B2;
-  border-color: #43B9B2;
+  background-color: #25ABBE;
+  border-color: #25ABBE;
   color: #ffffff;
 }
 
@@ -14951,14 +14944,14 @@ ul li {
 }
 
 .btn-secondary {
-  background-color: #C280D2;
-  border: 1px solid #C280D2;
+  background-color: #F45EAC;
+  border: 1px solid #F45EAC;
   border-radius: 5px;
   color: #ffffff;
 }
 .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active:focus, .btn-secondary.show {
-  background-color: #C280D2;
-  border-color: #C280D2;
+  background-color: #F45EAC;
+  border-color: #F45EAC;
   color: #ffffff;
 }
 .btn-secondary:first-child:active {
@@ -39105,8 +39098,8 @@ section.pswp__scroll-wrap {
   --footer-icon: #FF3636;
   --light-semi-gray:#efefef;
   --photoswipe-border: #ddd;
-  --theme-default: #ffd700;
-  --theme-secondary: #C280D2;
+  --theme-default: #25ABBE;
+  --theme-secondary: #F45EAC;
   --light2: #F5F6F9;
   --star-color: #ffa800;
   --chart-dashed-border: rgba(82, 82, 108, 0.2);
@@ -51043,7 +51036,7 @@ rect {
   transform: rotate(90deg);
 }
 .page-sidebar .sidebar-menu .sidebar-list.active .sidebar-link {
-  background-color: rgba(255, 215, 0, 0.1);
+  background-color: rgba(37, 171, 190, 0.1);
 }
 .page-sidebar .sidebar-menu .sidebar-list.active .sidebar-link svg {
   stroke: var(--theme-default);
@@ -51156,7 +51149,7 @@ rect {
   color: var(--theme-default);
 }
 .page-sidebar .sidebar-link.active {
-  background-color: rgba(255, 215, 0, 0.1);
+  background-color: rgba(37, 171, 190, 0.1);
 }
 .page-sidebar .sidebar-link.active svg {
   stroke: var(--theme-default);

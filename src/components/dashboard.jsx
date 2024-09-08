@@ -20,7 +20,7 @@ export default function Dashboard() {
     }, [])
     const handleLogout = () => {
         alert("logout logic")
-        navigate("/login")
+        // navigate("/login")
     }
     return (
         <div>
@@ -51,7 +51,7 @@ export default function Dashboard() {
                                     <div className="d-flex align-items-center">
                                         <img src={require("../assets/images/profile.png")} alt="" />
                                         <div className="flex-grow-1">
-                                            <h5>Faris</h5><span>UI Designer</span>
+                                            <h5>Connected Name</h5><span>UI Designer</span>
                                         </div>
                                     </div>
                                 </li>
