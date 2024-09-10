@@ -118,6 +118,12 @@ export default function Service() {
         quantity: 5,
 
     })
+    const [action, setAction] = useState(false);
+    const [data, setData] = useState({
+        name: "",
+        email: "",
+        type: "Employee"
+    })
     const toggleOpen = () => setModal(!modal);
 
     const filteredData = serviceData.filter((item) => {
@@ -145,32 +151,80 @@ export default function Service() {
         <>
             <MDBModal tabIndex='-1' open={modal} onClose={() => setModal(false)}>
                 <MDBModalDialog>
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Service Detail</MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <div className="modal-header">
-
-                                <div className="product-box row">
-                                    <div className="product-img col-lg-6">
-                                        <img className="img-fluid" src={productData.image} alt={productData.title} />
+                    {action ? (
+                        <MDBModalDialog>
+                            <MDBModalContent>
+                                <MDBModalHeader>
+                                    <MDBModalTitle>Servive Creation</MDBModalTitle>
+                                    <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                                </MDBModalHeader>
+                                <MDBModalBody>
+                                    <div className="login-main">
+                                        <form className="theme-form">
+                                            <h2 className="text-center">Create new service</h2>
+                                            <div className="form-group">
+                                                <label className="col-form-label">Service Name</label>
+                                                <input className="form-control" type="text" required=""
+                                                    placeholder="name"
+                                                    value={data.email}
+                                                    onChange={(e) => { setData({ ...data, name: e.target.value }) }} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-form-label">Price</label>
+                                                <input className="form-control" type="number" required=""
+                                                    value={data.price}
+                                                    onChange={(e) => { setData({ ...data, price: e.target.value }) }} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-form-label">Image</label>
+                                                <input className="form-control" type="file" required=""
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-form-label">Description</label>
+                                                <textarea className="form-control" rows="4" placeholder="Enter workspace description"
+                                                    value={data.description}
+                                                    onChange={(e) => { setData({ ...data, description: e.target.value }) }}></textarea>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div className="col-lg-6 text-start">
-                                        <div className="product-details">
-                                            <a href="product-page.html">
-                                                <h4>{productData.title}</h4>
-                                            </a>
-                                            <div className="product-price">
-                                                <span>${productData.price.toFixed(2)}</span>
-                                                {productData.salePrice && <del>${productData.salePrice.toFixed(2)}</del>}
-                                            </div>
-                                            <div className="product-view">
-                                                <h6 className="f-w-600">Product Details</h6>
-                                                <p className="mb-0">{productData.description}</p>
-                                            </div>
-                                            {/* <div className="product-qnty">
+                                </MDBModalBody>
+
+                                <MDBModalFooter>
+                                    <MDBBtn color='danger' onClick={toggleOpen}>
+                                        Close
+                                    </MDBBtn>
+                                    <MDBBtn onClick={handleSubmit}>Save changes</MDBBtn>
+                                </MDBModalFooter>
+                            </MDBModalContent>
+                        </MDBModalDialog>
+                    ) : (
+                        <MDBModalContent>
+                            <MDBModalHeader>
+                                <MDBModalTitle>Service Detail</MDBModalTitle>
+                                <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                            </MDBModalHeader>
+                            <MDBModalBody>
+                                <div className="modal-header">
+
+                                    <div className="product-box row">
+                                        <div className="product-img col-lg-6">
+                                            <img className="img-fluid" src={productData.image} alt={productData.title} />
+                                        </div>
+                                        <div className="col-lg-6 text-start">
+                                            <div className="product-details">
+                                                <a href="product-page.html">
+                                                    <h4>{productData.title}</h4>
+                                                </a>
+                                                <div className="product-price">
+                                                    <span>${productData.price.toFixed(2)}</span>
+                                                    {productData.salePrice && <del>${productData.salePrice.toFixed(2)}</del>}
+                                                </div>
+                                                <div className="product-view">
+                                                    <h6 className="f-w-600">Product Details</h6>
+                                                    <p className="mb-0">{productData.description}</p>
+                                                </div>
+                                                {/* <div className="product-qnty">
                                                 <hr />
                                                 <h6 className="f-w-600">Quantity</h6>
                                                 <fieldset>
@@ -196,30 +250,38 @@ export default function Service() {
                                                     </div>
                                                 </fieldset>
                                             </div> */}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </MDBModalBody>
-                        <MDBModalFooter>
-                            <MDBBtn color='danger' onClick={toggleOpen}>
-                                Close
-                            </MDBBtn>
-                            {/* <MDBBtn onClick={handleSubmit}>Save changes</MDBBtn> */}
-                        </MDBModalFooter>
-                    </MDBModalContent>
+                            </MDBModalBody>
+                            <MDBModalFooter>
+                                <MDBBtn color='danger' onClick={toggleOpen}>
+                                    Close
+                                </MDBBtn>
+                                {/* <MDBBtn onClick={handleSubmit}>Save changes</MDBBtn> */}
+                            </MDBModalFooter>
+                        </MDBModalContent>
+                    )}
                 </MDBModalDialog>
             </MDBModal>
             <div className="card-header d-md-block">
                 <div className="d-md-flex d-sm-block align-items-center">
-                    <form className="form-inline" action="#" method="get">
-                        <div className="form-group d-flex mb-0 align-items-center"><i className="fa fa-search"> </i>
-                            <input className="form-control-plaintext"
-                                type="text" onChange={handleSearch}
-                                placeholder="Search..." />
+                    <form className="search-form mb-0">
+                        <div className="input-group">
+                            <input className="form-control" type="text" onChange={handleSearch} placeholder="Search anything..." />
                         </div>
                     </form>
+                    <div className="flex-grow-1 text-end">
+                        <button className="btn btn-primary plus-square" onClick={() => {
+                            setAction(true)
+                            toggleOpen()
+                        }}>
+                            Add User
+                        </button>
+                    </div>
                 </div>
+
             </div>
             <hr />
             <div className="product-wrapper-grid">
@@ -238,6 +300,7 @@ export default function Service() {
                                                     <a>
                                                         <i className="fa fa-eye" onClick={() => {
                                                             setProductData(item)
+                                                            setAction(false)
                                                             setModal(true)
                                                         }}></i>
                                                     </a>
@@ -251,7 +314,7 @@ export default function Service() {
                                         </a>
                                         <p className="pro-detail">{item.description}</p>
                                         <div className="product-price">
-                                            <span style={{color:"red"}}>XAF{item.price.toFixed(2)}</span>
+                                            <span style={{ color: "red" }}>XAF{item.price.toFixed(2)}</span>
                                             {item.salePrice && <del>XAF{item.salePrice.toFixed(2)}</del>}
                                         </div>
                                     </div>

@@ -13,6 +13,7 @@ import Signup from './components/signup';
 import React, { Suspense } from 'react';
 import Service from './components/Dashboard/Service';
 import Calendar from './components/Dashboard/Calendar';
+import Account from './components/Dashboard/Account';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,9 @@ const router = createBrowserRouter(
           />
           <Route path='calendar'
             element={<Calendar />}
+          />
+          <Route path='account'
+            element={<Account />}
           />
         </Route>
         <Route path='signup'

@@ -91,6 +91,13 @@ export default function Dashboard() {
                                         </NavLink>
                                     </li>
                                     <li className="sidebar-list">
+                                        <NavLink className="sidebar-link"
+                                            onClick={screenWidth < 500 && toggleSidebar}
+                                            to={"account"}>
+                                            <span >Account</span>
+                                        </NavLink>
+                                    </li>
+                                    <li className="sidebar-list">
                                         <Link className="sidebar-link"
                                             onClick={() => {
                                                 screenWidth < 500 && toggleSidebar()
