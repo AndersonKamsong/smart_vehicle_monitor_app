@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import Maps from './Map/Maps'
 
 export default function Overview() {
 
     return (
         <div className="container-fluid">
-            <h1 className='display-1'>Overview</h1>
+            <Maps />
         </div>
     )
 }

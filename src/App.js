@@ -11,8 +11,7 @@ import Overview from './components/Dashboard/Overview';
 import Login from './components/login';
 import Signup from './components/signup';
 import React, { Suspense } from 'react';
-import Service from './components/Dashboard/Service';
-import Calendar from './components/Dashboard/Calendar';
+import BraceletDetail from './components/Dashboard/BraceletDetail';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,17 +19,14 @@ const router = createBrowserRouter(
       <Route path="/"
         element={<Root />}
       >
-        <Route path='dashboard'
+        <Route path='bracelet'
           element={<Dashboard />}
         >
           <Route index
             element={<Overview />}
           />
-          <Route path='service'
-            element={<Service />}
-          />
-          <Route path='calendar'
-            element={<Calendar />}
+          <Route path=':id'
+            element={<BraceletDetail />}
           />
         </Route>
         <Route path='signup'
