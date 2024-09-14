@@ -16,40 +16,7 @@ function ChangeView({ center, zoom }) {
   return null;
 }
 
-function Maps({ }) {
-  const centers = [
-  {
-    _id: "center1",
-    centerImage: ["center1_img1.jpg", "center1_img2.jpg"],
-    centerName: "Etoudi Presidential Palace",
-    centerHead: "President Paul Biya",
-    email: ["presidency@cameroon.gov.cm"],
-    Desc: "The official residence of the President of Cameroon.",
-    phone: ["+237 22 23 23 23"],
-    position: [{ latitude: 3.8715, longitude: 11.4991 }],
-  },
-  {
-    _id: "center2",
-    centerImage: ["center2_img1.png"],
-    centerName: "Achouya Market",
-    centerHead: "Market Manager",
-    email: ["achouya_market@gmail.com"],
-    Desc: "A bustling market in Yaoundé.",
-    phone: ["+237 69 00 00 00"],
-    position: [{ latitude: 3.8659, longitude: 11.4905 }],
-  },
-  {
-    _id: "center3",
-    centerImage: ["center3_img1.jpg", "center3_img2.jpg", "center3_img3.jpg"],
-    centerName: "Cameroon National Museum",
-    centerHead: "Museum Director",
-    email: ["museum@cameroon.gov.cm"],
-    Desc: "A museum showcasing Cameroon's history and culture.",
-    phone: ["+237 22 23 45 67"],
-    position: [{ latitude: 3.8612, longitude: 11.4873 }],
-  },
-  // ... add more centers with specific locations in Yaoundé
-];
+function Maps({ bracelets }) {
   const [search, setSearch] = useState('');
   const [center, setCenter] = useState([3.861747739262687, 11.520412969319732]);
   const [zoom, setZoom] = useState(13.48);
@@ -82,17 +49,19 @@ function Maps({ }) {
   });
 
   let markers;
-  if (centers.length > 0) {
+  if (bracelets.length > 0) {
 
-    markers = centers.map(row => ({
+    markers = bracelets.map(row => ({
       id: row._id,
-      img: row.centerImage.map(img => `${process.env.REACT_APP_API_URL}/../center/${row._id}/${img}`),
-      name: row.centerName,
-      head: row.centerHead,
-      email: row.email[0],
-      description: row.Desc,
-      tel1: row.phone[0],
-      position: [row.position[0].latitude, row.position[0].longitude]
+      name: row.soldier.name,
+      gender: row.soldier.gender,
+      group: row.soldier.group,
+      rank: row.soldier.rank,
+      brac_color: row.brac_color,
+      brac_model: row.brac_model,
+      status: row.status,
+      alert: row.alert,
+      position: [row.location.latitude, row.location.longitude]
     }));
   } else {
     markers = []
@@ -126,7 +95,7 @@ function Maps({ }) {
               {filteredMarkers.length > 0 ? (
                 filteredMarkers.map(marker => (
                   <li key={marker.id} onClick={() => handleClick(marker)} className='map_li'>
-                    {marker.name.slice(0,10)}
+                    {marker.name.slice(0, 10)}
                   </li>
                 )).slice(0, 5)
               ) : (
@@ -147,24 +116,17 @@ function Maps({ }) {
             <Marker
               key={marker.id}
               position={marker.position}
-              icon={selectedMarker && selectedMarker.id === marker.id ? myCustomIcon : defaultIcon}
+              icon={marker.alert ? myCustomIcon : defaultIcon}
+              // icon={selectedMarker && selectedMarker.id === marker.id ? myCustomIcon : defaultIcon}
             >
               <Popup>
-                {/* <div style={{textAlign:"center",margin:"auto"}}>
-                  <MapSlider img={marker.img} /></div> */}
                 <br /><br />
-                <b>Name: {marker.name}</b>
-                <h4>{marker.head}</h4>
-                <h4>Description:</h4>
-                <span className='description'>{marker.description}</span>
-                <br /><br />
-                <b>Contact:</b>
-                <br />
-                email: <a href={`mailto:${marker.email}`}>{marker.email}</a>
-                <br />
-                {marker.tel1 && <span>Tel 1: <a href={`tel:${marker.tel1}`}>{marker.tel1}</a></span>}
-                <br />
-                <a href={`geo:${marker.position}`} className="map_btn">Open in Maps</a>
+                <b>Name: {marker.name}</b><br/>
+                <b>gender: {marker.gender}</b><br/>
+                <b>group: {marker.group}</b><br/>
+                <b>rank: {marker.rank}</b>
+                <hr/>
+                <a href={`/bracelet/${marker.id}`} className="map_btn">More...</a>
               </Popup>
               <Tooltip><h5>{marker.name}</h5></Tooltip>
             </Marker>
