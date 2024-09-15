@@ -88,7 +88,7 @@ export default function BraceletDetail() {
                     toast.success(data.message)
                     setModal(false)
                     if (action==="delete")
-                        window.location = "/bracelet"
+                        window.location = "/dashboard/bracelet"
                 } else if (data.error) {
                     toast.error(data.error)
                 }

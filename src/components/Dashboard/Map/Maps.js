@@ -126,7 +126,7 @@ function Maps({ bracelets }) {
                 <b>group: {marker.group}</b><br/>
                 <b>rank: {marker.rank}</b>
                 <hr/>
-                <a href={`/bracelet/${marker.id}`} className="map_btn">More...</a>
+                <a href={`/dashboard/bracelet/${marker.id}`} className="map_btn">More...</a>
               </Popup>
               <Tooltip><h5>{marker.name}</h5></Tooltip>
             </Marker>

@@ -38,9 +38,21 @@ export default function Dashboard() {
             window.removeEventListener('resize', handleChanges);
         };
     }, [])
-    const handleLogout = () => {
-        alert("logout logic")
-        // navigate("/login")
+    const mainRef = useRef(null);
+    const [mainRefWidth, setmainRefWidth] = useState(0)
+
+    useEffect(() => {
+        if (mainRef.current) {
+            const { width, height } = mainRef.current.getBoundingClientRect();
+            console.log('Width:', width, 'Height:', height);
+            setmainRefWidth(width)
+        }
+    }, []);
+    const handleLogout = async () => {
+        await localStorage.setItem('omega_token', null)
+        await localStorage.setItem('omega_user_name', null)
+        await localStorage.setItem('omega_account_type', null)
+        window.location.pathname = "/login"
     }
     const handleSubmit = async () => {
         console.log(dataEdit);
@@ -71,169 +83,193 @@ export default function Dashboard() {
                 toast.error("Verify your internet connection")
             })
     }
-    return (
-        <div>
-            <ToastContainer />
-            <MDBModal tabIndex='-1' open={modal} onClose={() => setModal(false)}>
-                <MDBModalDialog>
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle> Watch Creation</MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <div className="login-main">
-                                <form className="theme-form">
-                                    {/* <p className="text-center">Enter the activity details</p> */}
-                                    <div className="form-group">
-                                        <div className="row g-2">
-                                            <div className="col-6">
-                                                <label className="col-form-label pt-0">Bracelet Model</label>
-                                                <input className="form-control" type="text" required="" placeholder="model"
-                                                    value={dataEdit.brac_model}
-                                                    onChange={(e) => {
-                                                        setDataEdit({ ...dataEdit, brac_model: e.target.value })
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="col-6">
-                                                <label className="col-form-label pt-0">Bracelet Color</label>
-                                                <input className="form-control" type="text" required="" placeholder="Color"
-                                                    value={dataEdit.brac_color}
-                                                    onChange={(e) => {
-                                                        setDataEdit({ ...dataEdit, brac_color: e.target.value })
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="row g-2">
-                                            <div className="col-6">
-                                                <label className="col-form-label pt-0">Soldier Name</label>
-                                                <input className="form-control" type="text" required="" placeholder="name"
-                                                    value={dataEdit.soldier.name}
-                                                    onChange={(e) => {
-                                                        setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, name: e.target.value } })
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="col-6">
-                                                <label className="col-form-label pt-0">Soldier Gender</label>
-                                                <select className="form-select" id="select"
-                                                    value={dataEdit.soldier.gender}
-                                                    onChange={(e) => {
-                                                        setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, gender: e.target.value } })
-                                                    }}>
-                                                    <option value="">Select a gender</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                </select>
+    if (localStorage.getItem('omega_account_type') === null) {
+        window.location.pathname = "/login"
+    } else {
+        return (
+            <div>
+                <ToastContainer />
+                <MDBModal tabIndex='-1' open={modal} onClose={() => setModal(false)}>
+                    <MDBModalDialog>
+                        <MDBModalContent>
+                            <MDBModalHeader>
+                                <MDBModalTitle> Watch Creation</MDBModalTitle>
+                                <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                            </MDBModalHeader>
+                            <MDBModalBody>
+                                <div className="login-main">
+                                    <form className="theme-form">
+                                        {/* <p className="text-center">Enter the activity details</p> */}
+                                        <div className="form-group">
+                                            <div className="row g-2">
+                                                <div className="col-6">
+                                                    <label className="col-form-label pt-0">Bracelet Model</label>
+                                                    <input className="form-control" type="text" required="" placeholder="model"
+                                                        value={dataEdit.brac_model}
+                                                        onChange={(e) => {
+                                                            setDataEdit({ ...dataEdit, brac_model: e.target.value })
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label className="col-form-label pt-0">Bracelet Color</label>
+                                                    <input className="form-control" type="text" required="" placeholder="Color"
+                                                        value={dataEdit.brac_color}
+                                                        onChange={(e) => {
+                                                            setDataEdit({ ...dataEdit, brac_color: e.target.value })
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="row g-2">
-                                            <div className="col-6">
-                                                <label className="col-form-label pt-0">Soldier Rank</label>
-                                                <input className="form-control" type="text" required="" placeholder="rank"
-                                                    value={dataEdit.soldier.rank}
-                                                    onChange={(e) => {
-                                                        setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, rank: e.target.value } })
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="col-6">
-                                                <label className="col-form-label pt-0">Soldier Gourp</label>
-                                                <input className="form-control" type="text" required="" placeholder="group"
-                                                    value={dataEdit.soldier.group}
-                                                    onChange={(e) => {
-                                                        setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, group: e.target.value } })
-                                                    }}
-                                                />
+                                        <div className="form-group">
+                                            <div className="row g-2">
+                                                <div className="col-6">
+                                                    <label className="col-form-label pt-0">Soldier Name</label>
+                                                    <input className="form-control" type="text" required="" placeholder="name"
+                                                        value={dataEdit.soldier.name}
+                                                        onChange={(e) => {
+                                                            setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, name: e.target.value } })
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label className="col-form-label pt-0">Soldier Gender</label>
+                                                    <select className="form-select" id="select"
+                                                        value={dataEdit.soldier.gender}
+                                                        onChange={(e) => {
+                                                            setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, gender: e.target.value } })
+                                                        }}>
+                                                        <option value="">Select a gender</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                        <div className="form-group">
+                                            <div className="row g-2">
+                                                <div className="col-6">
+                                                    <label className="col-form-label pt-0">Soldier Rank</label>
+                                                    <input className="form-control" type="text" required="" placeholder="rank"
+                                                        value={dataEdit.soldier.rank}
+                                                        onChange={(e) => {
+                                                            setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, rank: e.target.value } })
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label className="col-form-label pt-0">Soldier Gourp</label>
+                                                    <input className="form-control" type="text" required="" placeholder="group"
+                                                        value={dataEdit.soldier.group}
+                                                        onChange={(e) => {
+                                                            setDataEdit({ ...dataEdit, soldier: { ...dataEdit.soldier, group: e.target.value } })
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </MDBModalBody>
+
+                            <MDBModalFooter style={{ height: "60px", overflow: "hidden" }}>
+                                <MDBBtn color='danger' onClick={toggleOpen}>
+                                    Close
+                                </MDBBtn>
+                                <MDBBtn onClick={() => { handleSubmit() }}>Create</MDBBtn>
+                            </MDBModalFooter>
+                        </MDBModalContent>
+                    </MDBModalDialog>
+                </MDBModal>
+                <main className="page-wrapper compact-wrapper" id="pageWrapper">
+                    <header className="page-header row" style={{ zIndex: 4 }}>
+                        <div className="logo-wrapper d-flex align-items-center col-auto">
+                            <a href="#">
+                                <img className="for-light"
+                                    src={require("../assets/image/LOGO/NO.png")}
+                                    alt="logo" width={127} height={37} />
+                            </a>
+                        </div>
+                        <div className="page-main-header col">
+                            <div className="header-left d-lg-block d-none">
                             </div>
-
-                        </MDBModalBody>
-
-                        <MDBModalFooter style={{ height: "60px", overflow: "hidden" }}>
-                            <MDBBtn color='danger' onClick={toggleOpen}>
-                                Close
-                            </MDBBtn>
-                            <MDBBtn onClick={() => { handleSubmit() }}>Create</MDBBtn>
-                        </MDBModalFooter>
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
-            <main className="page-wrapper compact-wrapper" id="pageWrapper">
-                <header className="page-header row" style={{ zIndex: 4 }}>
-                    <div className="logo-wrapper d-flex align-items-center col-auto">
-                        <a href="#">
-                            <img className="for-light"
-                                // src={require("../assets/images/logo/logo.png")}
-                                alt="logo" width={127} height={37} />
-                        </a>
-                    </div>
-                    <div className="page-main-header col">
-                        <div className="header-left d-lg-block d-none">
-                        </div>
-                        <div className="nav-right">
-                            <ul className="header-right">
-                                <li className="profile-dropdown custom-dropdown" style={{cursor:"pointer"}}
-                                    onClick={() => {
-                                        setDataEdit({
-                                            brac_model: "",
-                                            brac_color: "",
-                                            soldier: {
-                                                name: "",
-                                                gender: "",
-                                                rank: "",
-                                                group: "",
-                                            },
-                                        })
-                                        toggleOpen()
-                                    }}
-                                    title='Add a watch'>
-                                    <div className="d-flex align-items-center">
-                                        <span className='f-40 fa fa-plus btn-primary'></span>
-                                    </div>
-                                </li>
-                                <li className="profile-dropdown custom-dropdown">
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-grow-1">
-                                            <h5>Connected Name</h5>
+                            <div className="nav-right">
+                                <ul className="header-right">
+                                    <li className="profile-dropdown custom-dropdown" style={{ cursor: "pointer" }}
+                                        title='bracelet'>
+                                        <NavLink className="sidebar-link" to={"/dashboard/bracelet"}>
+                                            <span>Home</span>
+                                            <span className='f-24 fa fa-home '></span>
+                                        </NavLink>
+                                    </li>
+                                    {localStorage.getItem('omega_account_type') === "Admin" && (
+                                        <li className="profile-dropdown custom-dropdown" style={{ cursor: "pointer" }}
+                                            onClick={() => {
+                                                navigate('/dashboard/account')
+                                            }}
+                                            title='Account'>
+                                            <NavLink className="sidebar-link" to={"/dashboard/bracelet"}>
+                                                <span>Account</span>
+                                                <span className='f-24 fa fa-user '></span>
+                                            </NavLink>
+                                        </li>
+                                    )}
+                                    <li className="profile-dropdown custom-dropdown" style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                            setDataEdit({
+                                                brac_model: "",
+                                                brac_color: "",
+                                                soldier: {
+                                                    name: "",
+                                                    gender: "",
+                                                    rank: "",
+                                                    group: "",
+                                                },
+                                            })
+                                            toggleOpen()
+                                        }}
+                                        title='Add a watch'>
+                                        <div className="d-flex align-items-center">
+                                            <span className='f-40 fa fa-plus '></span>
                                         </div>
-                                    </div>
-                                </li>
-                                <li className="profile-dropdown custom-dropdown" style={{cursor:"pointer"}}
-                                    onClick={() => {
-                                        handleLogout()
-                                    }}
-                                    title='Logout'>
-                                    <div className="d-flex align-items-center">
-                                        <span className='f-40 fa fa-door-open font-danger'></span>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+
+                                    <li className="profile-dropdown custom-dropdown">
+                                        <div className="d-flex align-items-center">
+                                            <div className="flex-grow-1">
+                                                <h5>{localStorage.getItem('omega_user_name')}</h5>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li className="profile-dropdown custom-dropdown" style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                            handleLogout()
+                                        }}
+                                        title='Logout'>
+                                        <div className="d-flex align-items-center">
+                                            <span className='f-40 fa fa-door-open font-danger'></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                    <div ref={mainRef} className="page-body-wrapper">
+                        <div className='page-body'
+                            style={{
+                                width: screenWidth > 500 ? mainRefWidth + 250 : mainRefWidth,
+                                marginLeft: screenWidth > 500 ? '-250px' : "00px",
+                                transition: "margin-left 0.3s ease-in-out",
+                                overflow: "auto"
+                            }}
+                        >
+                            <Outlet />
                         </div>
                     </div>
-                </header>
-                <div className="page-body-wrapper">
-                    <div className='page-body'
-                        style={{
-                            width: '100%',
-                            marginLeft: screenWidth > 500 ? '0px' : "00px",
-                            transition: "margin-left 0.3s ease-in-out",
-                            overflow: "auto"
-                        }}
-                    >
-                        <Outlet />
-                    </div>
-                </div>
-            </main>
-        </div>
-    )
+                </main >
+            </div >
+        )
+    }
 }
